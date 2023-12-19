@@ -2,6 +2,7 @@
   --transit: 700ms;
   --visited: black;
   --notVisited: white;
+  overflow-x: hidden;
 }
 * {
   margin: 0;
@@ -10,15 +11,15 @@
 
 body {
   background-color: black;
-  font-size: 16px;
-  overflow-x: hidden;
+  color: white;
 }
 .textStream {
+  /* clip-path: polygon(0 0, calc(100vw - 260px) 0, calc(100vw - 260px) 90px, 100% 90px, 100% 100%, 0 100%); */
   font-family: monospace;
   font-size: 1.6rem;
   display: flex;
+  height: calc(100vh - 30px);
   flex-wrap: wrap;
-  color: white;
 }
 .letters {
   width: 1rem;
@@ -31,26 +32,30 @@ body {
   width: 100vw;
   opacity: 0;
 }
-.speed {
-  background-color: rgba(128, 128, 128, 0.606);
-  color: white;
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
+.stats {
+  display: flex;
+  justify-content: space-between;
+  font-family: monospace;
+  font-size: 1.6rem;
+  color:gray;
 }
-.blackTheme {
+
+/* .blackTheme {
+
   color: black;
   transition: var(--transit);
 }
 .whiteTheme {
   color: white;
   transition: var(--transit);
-}
+} */
 .blackGround {
   background-color: black;
+  color: white;
   transition: var(--transit);
 }
 .whiteGround {
   background-color: white;
+  color: black;
   transition: var(--transit);
 }
