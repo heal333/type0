@@ -31,6 +31,8 @@ const chooseR = function(){
   let rand = Math.floor(Math.random()*paralst.length);
   return paralst[rand]
 }
+
+inp.focus();
 //implement theme change when double clicking
 html.addEventListener("dblclick", () => {
   if (isWhite) {
