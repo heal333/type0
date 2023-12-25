@@ -6,7 +6,8 @@ const textStream = document.querySelector(".textStream");
 const inp = document.querySelector(".inp");
 const bench = document.querySelector(".speed");
 const accuracy = document.querySelector(".accuracy");
-const highest = document.querySelector(".highest");
+const localhighest = document.querySelector(".highest");
+const globalHighest = document.querySelector(".globalHighest");
 const root = document.querySelector(":root");
 let highestS;
 let isWhite = false;
@@ -14,23 +15,22 @@ let iniTime;
 let speed;
 let wrongHit = 0;
 
-const randStream = (Math.random()*4).toFixed();
-
+const randStream = (Math.random() * 5).toFixed();
+console.log(randStream);
 
 inp.focus(); //for focusing on the input section without clicking explicitly
 
 //for setting the highest score from local storage
 if (window.localStorage.highest) {
   highestS = window.localStorage.highest;
-  highest.innerText = `highest: ${highestS} WPM`;
+  localhighest.innerText = `highest: ${highestS} WPM`;
 } else {
   highestS = 0;
   window.localStorage.setItem("highest", 0);
 }
 
-
 //to render the paragraph
-function streamRender(streams){ 
+function streamRender(streams) {
   for (let i = 0; i < streams.length; i++) {
     let temp = `<div class="ltr${i} letters">${streams[i]}</div>`;
     textStream.insertAdjacentHTML("beforeend", temp);
@@ -47,13 +47,14 @@ function inputChecker(streams) {
       if (!iniTime) {
         iniTime = new Date();
       }
-    } else{
+    } else {
       wrongHit += 1;
     }
     speed = ((letter / ((new Date() - iniTime) / 1000)) * 60) / 5; // this will calculate the speed in WPM
     errorPercentage = (letter / (letter + wrongHit)) * 100; // to calculate the accuracy
 
-    if ((letter > 333) & (highestS < speed)) {//to determine if the current typing speed is the highsest speed
+    if ((letter > 333) & (highestS < speed)) {
+      //to determine if the current typing speed is the highsest speed
       highestS = speed.toFixed();
       window.localStorage.setItem("highest", highestS);
     }
@@ -61,14 +62,31 @@ function inputChecker(streams) {
     //for rendering the the speed, accuracy and highest score
     accuracy.innerText = `accuracy: ${errorPercentage.toFixed(2)}%`;
     bench.innerText = `Speed: ${speed.toFixed()} WPM`;
-    highest.innerText = `highest: ${highestS} WPM`;
+    localhighest.innerText = `highest: ${highestS} WPM`;
     event.target.value = "";
   });
 }
 
+const setGlobalHigh = (speed)=>{
+  fetch(
+    "https://type0-a8335-default-rtdb.asia-southeast1.firebasedatabase.app/stats.json",
+    { method: "PUT", body: JSON.stringify({ globalHigh: speed }) }
+  );
+}
 
 
 
+fetch(
+  "https://type0-a8335-default-rtdb.asia-southeast1.firebasedatabase.app/stats/globalHigh.json"
+)
+  .then((response) => response.json())
+  .then((response) => {
+    if (response<highestS){
+      setGlobalHigh(highestS)
+      response = highestS
+    }
+    globalHighest.innerText = `globalHighest: ${response} WPM`;
+  });
 fetch(
   `https://type0-a8335-default-rtdb.asia-southeast1.firebasedatabase.app/txtStreams/stream00${randStream}.json`
 )
@@ -78,7 +96,6 @@ fetch(
     streamRender(streams);
     inputChecker(streams);
   });
-
 
 //implement theme change when double clicking
 html.addEventListener("dblclick", () => {
@@ -94,4 +111,3 @@ html.addEventListener("dblclick", () => {
     isWhite = true;
   }
 });
-
