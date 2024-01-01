@@ -19,6 +19,8 @@ body {
 }
 .textStream {
   /* clip-path: polygon(0 0, calc(100vw - 260px) 0, calc(100vw - 260px) 90px, 100% 90px, 100% 100%, 0 100%); */
+  /* margin: auto;
+  padding: 0px 0px 0px 50px; */
   font-family: monospace;
   font-size: 1.6rem;
   display: flex;
@@ -27,6 +29,9 @@ body {
 .letters {
   width: 1rem;
   text-align: center;
+}
+.word{
+  display: flex;
 }
 .inp {
   position: absolute;

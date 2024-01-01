@@ -29,11 +29,18 @@ if (window.localStorage.highest) {
   window.localStorage.setItem("highest", 0);
 }
 
+
 //to render the paragraph
 function streamRender(streams) {
+  let wordEliment ="";
   for (let i = 0; i < streams.length; i++) {
     let temp = `<div class="ltr${i} letters">${streams[i]}</div>`;
-    textStream.insertAdjacentHTML("beforeend", temp);
+    wordEliment +=temp;
+    if (streams[i]==" "){
+      textStream.insertAdjacentHTML("beforeend", `<div class="word">${wordEliment}</div>`);
+      wordEliment = "";
+
+    }
   }
 }
 
