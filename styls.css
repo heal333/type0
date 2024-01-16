@@ -1,9 +1,9 @@
 :root {
   --transit: 700ms;
   --background: black;
-  --fontColor: white;
-  --visited: black;
-  --notVisited: white;
+  --fontColor: gray;
+  --visited: white;
+  --notVisited: gray;
   --statsBackground: black;
   overflow-x: hidden;
 }
@@ -29,6 +29,10 @@ body {
 .letters {
   width: 1rem;
   text-align: center;
+}
+.visitedLetters{
+  color:var(--visited);
+  /* transition: var(--transit); */
 }
 .word{
   display: flex;
