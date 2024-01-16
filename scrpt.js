@@ -68,7 +68,7 @@ function inputChecker(streams) {
       }
     }
 
-    
+
     //for rendering the the speed, accuracy and highest score
     accuracy.innerText = `accuracy: ${errorPercentage.toFixed(2)}%`;
     bench.innerText = `Speed: ${speed.toFixed()} WPM`;
@@ -85,7 +85,6 @@ const setGlobalHigh = (speed) => {
   );
   globalHighest.innerText = `globalHighest: ${speed} WPM`;
 };
-
 
 
 
