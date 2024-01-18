@@ -59,12 +59,13 @@ function inputChecker(streams) {
 
     //to determine if the current typing speed is the highsest speed 
     if (letter > 333){
-      if ((highestScoreLocal < speed)){
+      if (highestScoreLocal < speed){
       highestScoreLocal = speed.toFixed();
       window.localStorage.setItem("highest", highestScoreLocal);
       }
-      if (speed>highestScoreGlobal){
+      if (highestScoreGlobal<speed){
         setGlobalHigh(speed.toFixed())
+        highestScoreGlobal=speed;
       }
     }
 
