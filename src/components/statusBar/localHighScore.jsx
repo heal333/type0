@@ -1,16 +1,58 @@
 import { useState } from "react";
+import UserName from "./userName";
 
 function LocalHighScore(props) {
-    const [highScore,setHighScore] = useState(localStorage.getItem("highScore")?localStorage.getItem("highScore"):0)
-    const [highestAccu, setHighestAccu] = useState(localStorage.getItem("highestAccu")?localStorage.getItem("highestAccu"):0)
-    if (props.totalLetters>1000 && highScore<props.speed){
-        setHighScore(props.speed);
-        setHighestAccu(props.accuracy)
-        localStorage.setItem("highestAccu",props.accuracy)
-        localStorage.setItem("highScore",props.speed);
+    // const [topTenObj, setTopTenObj] = useState([]);
+    // let topTenObj;
+    const [getUser, setGetUser] = useState(false);
+    const [globalLeaderBoard,setGlobalLeaderBoard] = useState({})
+    function closeUserNameModal(){
+        setGetUser(false)
     }
 
-    return <div>{`highScore:${highScore}, ${highestAccu}%`}</div>;
+    const [highScore, setHighScore] = useState(
+        localStorage.getItem("highScore")
+            ? localStorage.getItem("highScore")
+            : 0
+    );
+    const [highestAccu, setHighestAccu] = useState(
+        localStorage.getItem("highestAccu")
+            ? localStorage.getItem("highestAccu")
+            : 0
+    );
+    async function globalHighest(curr) {
+        const response = await fetch(
+            "https://type0-a8335-default-rtdb.asia-southeast1.firebasedatabase.app/leaderBoard.json"
+        );
+        const result = await response.json();
+        setGlobalLeaderBoard(result);
+        const minSpeed = Object.keys(result).reduce((acc,curr)=>{
+            if (acc>curr){
+                return curr;
+            }else{
+                return acc
+            }
+        },1000)
+        if (minSpeed < curr) {
+            setGetUser(true)
+        }
+    }
+    //globalHighest(40)
+
+    if (props.totalLetters > 700 && highScore < props.speed) {
+        globalHighest(props.speed);
+        setHighScore(props.speed);
+        setHighestAccu(props.accuracy);
+        localStorage.setItem("highestAccu", props.accuracy);
+        localStorage.setItem("highScore", props.speed);
+    }
+
+    return (
+        <>
+            <div>{`highScore:${highScore}, ${highestAccu}%`}</div>
+            {getUser && <UserName previousLeaderboard={globalLeaderBoard} speed={props.speed} accuracy={props.accuracy} closeUserNameModal={closeUserNameModal}/>}
+        </>
+    );
 }
 
 export default LocalHighScore;

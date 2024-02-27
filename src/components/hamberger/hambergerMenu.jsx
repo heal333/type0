@@ -27,7 +27,7 @@ function HambergerMenu() {
                 onClick={openSettings}
             ></img>
             <img
-                className="leaderBoard"
+                className="leaderBoardIco"
                 src={leaderboard}
                 onClick={openLeaderBoard}
             ></img>

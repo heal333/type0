@@ -41,6 +41,7 @@ function Settings(props) {
                     <label>
                         visited letter color:{" "}
                         <input
+                            className="colorInput"
                             type="color"
                             onChange={visitedTextColorSelect}
                             value={localStorage.getItem("visitedLetter")}
@@ -50,6 +51,7 @@ function Settings(props) {
                     <label>
                         unvisited letter color:{" "}
                         <input
+                            className="colorInput"
                             type="color"
                             onChange={unvisitedTextColorSelect}
                             value={localStorage.getItem("unvisitedLetter")}
@@ -59,6 +61,7 @@ function Settings(props) {
                     <label>
                         background color:{" "}
                         <input
+                            className="colorInput"
                             type="color"
                             onChange={backgroundColorSelect}
                             value={localStorage.getItem("backgroundColor")}

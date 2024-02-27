@@ -1,5 +1,5 @@
 import Speed from "./Speed";
-import Accuracy from "./Accuracy";
+import Accuracy from "./accuracy";
 import LocalHighScore from "./localHighScore";
 function StatusBar(props) {
     return (

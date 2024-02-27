@@ -32,7 +32,8 @@ footer {
     color: white;
     display: flex;
     justify-content: space-between;
-    position: absolute;
+    position: fixed;
+    left: 0;
     bottom: 0;
     width: 100vw;
     height: 2rem;
@@ -44,18 +45,19 @@ footer {
     right: 0px;
     bottom: 2rem;
 }
-.leaderBoard {
+.leaderBoardIco {
     background-color: black;
     position: absolute;
     right: 0px;
     bottom: 4rem;
 }
 .overlay {
+    position: fixed;
     display: flex;
-    position: absolute;
     justify-content: center;
     align-items: center;
     top: 0;
+    left: 0;
     background-color: rgba(87, 87, 87, 0.259);
     height: 100vh;
     width: 100vw;
@@ -76,7 +78,7 @@ footer {
     border-radius: 2rem;
     z-index: 5;
 }
-.modal input{
+.colorInput{
     width: 2rem;
     background-color: black;
     border: 1px dotted white;
@@ -86,4 +88,10 @@ footer {
 }
 .options {
     background-color: rgba(0, 0, 0, 0.50);
+}
+.rankItem{
+
+    width: inherit;
+    display: flex;
+    justify-content:space-around;
 }
