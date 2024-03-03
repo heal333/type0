@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Modal from "../UI/modal";
 
 function LeaderBoard(props) {
     // let topTenList = [1, 2, 3, 4];
@@ -15,22 +16,21 @@ function LeaderBoard(props) {
     }
 
     return (
-        <>
-            <div className="overlay" onClick={props.closeLeaderBoard}>
-                <div
-                    className="modal leaderboard"
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    {topTenList.map((ele) => (
+        <Modal label="Global Leaderboard" closeModal={props.closeLeaderBoard}>
+            <header className="rankItem">
+                <label>User</label>
+                <label>speed</label>
+                <label>accuracy</label>
+            </header>
+        {topTenList.map((ele) => (
                         <div className="rankItem" key={ele[0]}>
                             <div>{ele[1].user}</div>
                             <div>{ele[0]}WPM</div>
                             <div>{ele[1].accuracy}%</div>
                         </div>
                     ))}
-                </div>
-            </div>
-        </>
+
+        </Modal>
     );
 }
 

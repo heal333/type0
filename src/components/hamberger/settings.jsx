@@ -1,3 +1,5 @@
+import Modal from "../UI/modal";
+
 const rootEle = document.querySelector(":root");
 
 rootEle.style.setProperty(
@@ -35,42 +37,85 @@ function Settings(props) {
         rootEle.style.setProperty("--backgroundColor", "#000000");
     }
     return (
-        <>
-            <div className="overlay" onClick={props.closeSettings}>
-                <div className="modal" onClick={(e) => e.stopPropagation()}>
-                    <label>
-                        visited letter color:{" "}
-                        <input
-                            className="colorInput"
-                            type="color"
-                            onChange={visitedTextColorSelect}
-                            value={localStorage.getItem("visitedLetter")}
-                        ></input>
-                    </label>
+        <Modal label="Settings" closeModal={props.closeSettings}>
+            <span className="themePresetSelectBar">
+                <label>theme:</label>
+                <label>dark</label>
+                <input className="themePresetSelect" type="checkbox"></input>
+                <label>light</label>
+                <input className="themePresetSelect" type="checkbox"></input>
+                <label>matrix</label>
+                <input className="themePresetSelect" type="checkbox"></input>
+                <label>custom</label>
+                <input className="themePresetSelect" type="checkbox"></input>
+            </span>
+            <label>
+                visited letter color:{" "}
+                <input
+                    className="colorInput"
+                    type="color"
+                    onChange={visitedTextColorSelect}
+                    value={localStorage.getItem("visitedLetter")}
+                ></input>
+            </label>
 
-                    <label>
-                        unvisited letter color:{" "}
-                        <input
-                            className="colorInput"
-                            type="color"
-                            onChange={unvisitedTextColorSelect}
-                            value={localStorage.getItem("unvisitedLetter")}
-                        ></input>
-                    </label>
+            <label>
+                unvisited letter color:{" "}
+                <input
+                    className="colorInput"
+                    type="color"
+                    onChange={unvisitedTextColorSelect}
+                    value={localStorage.getItem("unvisitedLetter")}
+                ></input>
+            </label>
 
-                    <label>
-                        background color:{" "}
-                        <input
-                            className="colorInput"
-                            type="color"
-                            onChange={backgroundColorSelect}
-                            value={localStorage.getItem("backgroundColor")}
-                        ></input>
-                    </label>
-                    <button onClick={resetTheme}>reset</button>
-                </div>
-            </div>
-        </>
+            <label>
+                background color:{" "}
+                <input
+                    className="colorInput"
+                    type="color"
+                    onChange={backgroundColorSelect}
+                    value={localStorage.getItem("backgroundColor")}
+                ></input>
+            </label>
+            <button onClick={resetTheme}>reset</button>
+        </Modal>
+        // <>
+        //     <div className="overlay" onClick={props.closeSettings}>
+        //         <div className="modal" onClick={(e) => e.stopPropagation()}>
+        //             <label>
+        //                 visited letter color:{" "}
+        //                 <input
+        //                     className="colorInput"
+        //                     type="color"
+        //                     onChange={visitedTextColorSelect}
+        //                     value={localStorage.getItem("visitedLetter")}
+        //                 ></input>
+        //             </label>
+
+        //             <label>
+        //                 unvisited letter color:{" "}
+        //                 <input
+        //                     className="colorInput"
+        //                     type="color"
+        //                     onChange={unvisitedTextColorSelect}
+        //                     value={localStorage.getItem("unvisitedLetter")}
+        //                 ></input>
+        //             </label>
+
+        //             <label>
+        //                 background color:{" "}
+        //                 <input
+        //                     className="colorInput"
+        //                     type="color"
+        //                     onChange={backgroundColorSelect}
+        //                     value={localStorage.getItem("backgroundColor")}
+        //                 ></input>
+        //             </label>
+        //             <button onClick={resetTheme}>reset</button>
+        //         </div>
+        //     </div>
+        // </>
     );
 }
 

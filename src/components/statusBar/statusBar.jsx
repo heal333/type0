@@ -3,6 +3,8 @@ import Accuracy from "./accuracy";
 import LocalHighScore from "./localHighScore";
 function StatusBar(props) {
     return (
+        <>
+        <div className="footerPadding"></div>
         <footer>
             <Speed speed={props.speed}></Speed>
             <Accuracy accuracy={props.accuracy}></Accuracy>
@@ -12,6 +14,7 @@ function StatusBar(props) {
                 totalLetters={props.totalLetters}
             ></LocalHighScore>
         </footer>
+        </>
     );
 }
 export default StatusBar;
