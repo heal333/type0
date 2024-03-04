@@ -13,19 +13,32 @@ function InputChecker(props) {
     function currentLetterColor(i, color) {
         document.querySelector(`.ltr${i}`).style.color = color;
     }
+    function cursor(type, i) {
+        if (type === "ADD") {
+            document.querySelector(`.ltr${i}`).style.textDecoration =
+                "Underline";
+        }
+        if (type === "REMOVE" && i>=0) {
+            document.querySelector(`.ltr${i}`).style.textDecoration = null;
+        }
+    }
 
     useEffect(() => {
         document.querySelector(".inputOverlay").focus();
-    }, []);
+        cursor("ADD", i);
+        
+        
+    }, [textStream]);
 
     function inputHandeler(e) {
         if (e.key === "Shift") {
         } else if (textStream[i] === e.key) {
             currentLetterColor(i, "var(--visitedLetter)");
+            cursor("REMOVE",i)
+            cursor("ADD", i + 1);
             setI((prev) => prev + 1);
         } else if (e.key === "Backspace") {
             if (i > 0) {
-
                 if (
                     document.querySelector(`.ltr${i - 1}`).style
                         .backgroundColor === "grey"
@@ -33,14 +46,17 @@ function InputChecker(props) {
                     wrongHit -= 1;
                 }
                 document.querySelector(`.ltr${i - 1}`).style.backgroundColor =
-                null;
+                    null;
                 currentLetterColor(i - 1, "var(--unvisitedLetter)");
+                cursor("REMOVE",i)
+                cursor("ADD", i - 1);
                 setI((prev) => prev - 1);
             }
         } else {
             wrongHit += 1;
-            // currentLetterColor(i, "red");
             document.querySelector(`.ltr${i}`).style.backgroundColor = "grey";
+            cursor("REMOVE",i)
+            cursor("ADD", i + 1);
             setI((prev) => prev + 1);
         }
         if (i === 0) iniTime = new Date();
