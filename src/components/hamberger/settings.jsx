@@ -1,7 +1,7 @@
+import { useState } from "react";
 import Modal from "../UI/modal";
 
 const rootEle = document.querySelector(":root");
-
 rootEle.style.setProperty(
     "--visitedLetter",
     localStorage.getItem("visitedLetter")
@@ -16,38 +16,126 @@ rootEle.style.setProperty(
 );
 
 function Settings(props) {
+    const [visitedLetter, setVisitedLetter] = useState(
+        localStorage.getItem("visitedLetter")
+            ? localStorage.getItem("visitedLetter")
+            : "#808080"
+    );
+    const [unvisitedLetter, setUnvisitedLetter] = useState(
+        localStorage.getItem("unvisitedLetter")
+            ? localStorage.getItem("unvisitedLetter")
+            : "#ffffff"
+    );
+    const [backgroundColor, setBackgroundColor] = useState(
+        localStorage.getItem("backgroundColor")
+            ? localStorage.getItem("backgroundColor")
+            : "#000000"
+    );
+    const [darkThemeCheck, setDarkThemeCheck] = useState(false);
+    const [lightThemeCheck, setLightThemeCheck] = useState(false);
+    const [matrixThemeCheck, setMatrixThemeCheck] = useState(false);
+    const [customThemeCheck, setCustomThemeCheck] = useState(false);
+    const presetThemes = [
+        setLightThemeCheck,
+        setDarkThemeCheck,
+        setMatrixThemeCheck,
+        setCustomThemeCheck,
+    ];
+    function changeTheme(visitedColor, unvisitedColor, backgroundColor) {
+        rootEle.style.setProperty("--visitedLetter", visitedColor);
+        rootEle.style.setProperty("--unvisitedLetter", unvisitedColor);
+        rootEle.style.setProperty("--backgroundColor", backgroundColor);
+        setVisitedLetter(visitedColor);
+        setUnvisitedLetter(unvisitedColor);
+        setBackgroundColor(backgroundColor);
+        localStorage.setItem("visitedLetter", visitedColor);
+        localStorage.setItem("unvisitedLetter", unvisitedColor);
+        localStorage.setItem("backgroundColor", backgroundColor);
+    }
     function visitedTextColorSelect(e) {
         rootEle.style.setProperty("--visitedLetter", e.target.value);
+        setVisitedLetter(e.target.value);
         localStorage.setItem("visitedLetter", e.target.value);
+        presetThemes.forEach((ele) => {
+            ele(false);
+        });
+        setCustomThemeCheck(true);
     }
     function unvisitedTextColorSelect(e) {
         rootEle.style.setProperty("--unvisitedLetter", e.target.value);
+        setUnvisitedLetter(e.target.value);
         localStorage.setItem("unvisitedLetter", e.target.value);
+        presetThemes.forEach((ele) => {
+            ele(false);
+        });
+        setCustomThemeCheck(true);
     }
     function backgroundColorSelect(e) {
         rootEle.style.setProperty("--backgroundColor", e.target.value);
+        setBackgroundColor(e.target.value);
         localStorage.setItem("backgroundColor", e.target.value);
+        presetThemes.forEach((ele) => {
+            ele(false);
+        });
+        setCustomThemeCheck(true);
     }
     function resetTheme() {
-        localStorage.setItem("visitedLetter", "#808080");
-        localStorage.setItem("unvisitedLetter", "#ffffff");
-        localStorage.setItem("backgroundColor", "#000000");
-        rootEle.style.setProperty("--visitedLetter", "#808080");
-        rootEle.style.setProperty("--unvisitedLetter", "#ffffff");
-        rootEle.style.setProperty("--backgroundColor", "#000000");
+        presetThemes.forEach((ele) => {
+            ele(false);
+        });
+        setDarkThemeCheck(true);
+        changeTheme("#808080", "#ffffff", "#000000");
+    }
+
+    function optionDark(e) {
+        presetThemes.forEach((ele) => {
+            ele(false);
+        });
+        if (e.target.name === "dark") {
+            resetTheme();
+            setDarkThemeCheck(true);
+        } else if (e.target.name === "light") {
+            setLightThemeCheck(true);
+            changeTheme("#808080", "#000000", "#ffffff");
+        } else if (e.target.name === "matrix") {
+            changeTheme("#660000", "#0A8F00", "#000000");
+            setMatrixThemeCheck(true);
+        } else if (e.target.name === "custom") {
+            setCustomThemeCheck(true);
+        }
     }
     return (
         <Modal label="Settings" closeModal={props.closeSettings}>
-            <span className="themePresetSelectBar">
+            <span className="themePresetSelectBar" onChange={optionDark}>
                 <label>theme:</label>
                 <label>dark</label>
-                <input className="themePresetSelect" type="checkbox"></input>
+                <input
+                    className="themePresetSelect"
+                    name="dark"
+                    type="checkbox"
+                    checked={darkThemeCheck}
+                ></input>
                 <label>light</label>
-                <input className="themePresetSelect" type="checkbox"></input>
+                <input
+                    className="themePresetSelect"
+                    name="light"
+                    type="checkbox"
+                    checked={lightThemeCheck}
+                ></input>
                 <label>matrix</label>
-                <input className="themePresetSelect" type="checkbox"></input>
+                <input
+                    className="themePresetSelect"
+                    name="matrix"
+                    type="checkbox"
+                    checked={matrixThemeCheck}
+                ></input>
                 <label>custom</label>
-                <input className="themePresetSelect" type="checkbox"></input>
+                <input
+                    className="themePresetSelect"
+                    name="custom"
+                    type="checkbox"
+                    checked={customThemeCheck}
+                ></input>
             </span>
             <label>
                 visited letter color:{" "}
@@ -55,7 +143,7 @@ function Settings(props) {
                     className="colorInput"
                     type="color"
                     onChange={visitedTextColorSelect}
-                    value={localStorage.getItem("visitedLetter")}
+                    value={visitedLetter}
                 ></input>
             </label>
 
@@ -65,7 +153,7 @@ function Settings(props) {
                     className="colorInput"
                     type="color"
                     onChange={unvisitedTextColorSelect}
-                    value={localStorage.getItem("unvisitedLetter")}
+                    value={unvisitedLetter}
                 ></input>
             </label>
 
@@ -75,10 +163,12 @@ function Settings(props) {
                     className="colorInput"
                     type="color"
                     onChange={backgroundColorSelect}
-                    value={localStorage.getItem("backgroundColor")}
+                    value={backgroundColor}
                 ></input>
             </label>
-            <button onClick={resetTheme}>reset</button>
+            <button className="themeResetButton" onClick={resetTheme}>
+                reset
+            </button>
         </Modal>
         // <>
         //     <div className="overlay" onClick={props.closeSettings}>

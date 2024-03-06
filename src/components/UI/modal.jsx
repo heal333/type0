@@ -1,4 +1,5 @@
 function Modal(props) {
+    
     return(
     <div className="overlay" onClick={props.closeModal}>
         <div className="modal leaderboard" onClick={(e) => e.stopPropagation()}>

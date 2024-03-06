@@ -41,7 +41,7 @@ function InputChecker(props) {
             if (i > 0) {
                 if (
                     document.querySelector(`.ltr${i - 1}`).style
-                        .backgroundColor === "grey"
+                        .backgroundColor === "var(--visitedLetter)"
                 ) {
                     wrongHit -= 1;
                 }
@@ -54,7 +54,7 @@ function InputChecker(props) {
             }
         } else {
             wrongHit += 1;
-            document.querySelector(`.ltr${i}`).style.backgroundColor = "grey";
+            document.querySelector(`.ltr${i}`).style.backgroundColor = "var(--visitedLetter)";
             cursor("REMOVE",i)
             cursor("ADD", i + 1);
             setI((prev) => prev + 1);
