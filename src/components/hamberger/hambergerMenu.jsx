@@ -19,7 +19,6 @@ function HambergerMenu() {
     function closeLeaderBoard() {
         setShowLeaderBoard(false);
     }
-    console.log("hammed")
     return (
         <>
             <img

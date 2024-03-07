@@ -6,7 +6,7 @@ import HambergerMenu from "./components/hamberger/hambergerMenu";
 
 function App() {
     const [speed, setSpeed] = useState("infinity");
-    const [accuracy, setAccuracy] = useState("100.00");
+    const [accuracy, setAccuracy] = useState(100.00);
     const [totalLetters, setTotalLetters] = useState(0);
 
 

@@ -142,11 +142,17 @@ footer {
 }
 .rankItem label {
     font-style: italic;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     text-decoration: underline;
-    translate: 0.5rem;
+}
+.rankItem div, .rankItem label{
+    width: 5rem;
+}
+.rankItem div{
+    font-family: 'Courier New', Courier, monospace;
 }
 .themePresetSelectBar {
+
     width: inherit;
     display: flex;
     justify-content: space-evenly;
