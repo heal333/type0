@@ -18,7 +18,7 @@ function InputChecker(props) {
             document.querySelector(`.ltr${i}`).style.textDecoration =
                 "Underline";
         }
-        if (type === "REMOVE" && i>=0) {
+        if (type === "REMOVE" && i >= 0) {
             document.querySelector(`.ltr${i}`).style.textDecoration = null;
         }
     }
@@ -26,19 +26,18 @@ function InputChecker(props) {
     useEffect(() => {
         document.querySelector(".inputOverlay").focus();
         cursor("ADD", i);
-        
-        
     }, [textStream]);
 
     function inputHandeler(e) {
         if (e.key === "Shift") {
         } else if (textStream[i] === e.key) {
             currentLetterColor(i, "var(--visitedLetter)");
-            cursor("REMOVE",i)
+            cursor("REMOVE", i);
             cursor("ADD", i + 1);
             setI((prev) => prev + 1);
         } else if (e.key === "Backspace") {
             if (i > 0) {
+                // document.querySelector(`.ltr${i-1}`).innerText = textStream[i-1]
                 if (
                     document.querySelector(`.ltr${i - 1}`).style
                         .backgroundColor === "var(--visitedLetter)"
@@ -48,16 +47,22 @@ function InputChecker(props) {
                 document.querySelector(`.ltr${i - 1}`).style.backgroundColor =
                     null;
                 currentLetterColor(i - 1, "var(--unvisitedLetter)");
-                cursor("REMOVE",i)
+                cursor("REMOVE", i);
                 cursor("ADD", i - 1);
                 setI((prev) => prev - 1);
             }
         } else {
             wrongHit += 1;
-            document.querySelector(`.ltr${i}`).style.backgroundColor = "var(--visitedLetter)";
-            cursor("REMOVE",i)
+            document.querySelector(`.ltr${i}`).innerText = e.key;
+            document.querySelector(`.ltr${i}`).style.backgroundColor =
+                "var(--visitedLetter)";
+            cursor("REMOVE", i);
             cursor("ADD", i + 1);
             setI((prev) => prev + 1);
+            setTimeout(()=>{
+                document.querySelector(`.ltr${i}`).innerText = textStream[i]
+            },150)
+            
         }
         if (i === 0) iniTime = new Date();
         speed =

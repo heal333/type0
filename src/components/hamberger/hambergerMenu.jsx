@@ -25,11 +25,13 @@ function HambergerMenu() {
                 className="hambergerMenu"
                 src={ham}
                 onClick={openSettings}
+                title="settings"
             ></img>
             <img
                 className="leaderBoardIco"
                 src={leaderboard}
                 onClick={openLeaderBoard}
+                title="leaderboard"
             ></img>
             {showSettings && <Settings closeSettings={closeSettings} />}
             {showLeaderBoard && <LeaderBoard closeLeaderBoard={closeLeaderBoard} />}
